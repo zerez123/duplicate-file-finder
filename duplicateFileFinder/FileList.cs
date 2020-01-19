@@ -8,17 +8,17 @@ namespace duplicateFileFinder
 {
     class FileList
     {
-        static private  List<File> files = new List<File>();
-        static public List<string> hashs = new List<string>();
+        static private  List<_file> _files = new List<_file>();
         
-        private  class File
+        
+        private  class _file
         {
             string NameWithExt;
             string Ext;
             string Path;
             string Md5;
 
-            public File(string path, string file, string ext, string md5)
+            public _file(string path, string file, string ext, string md5)
             {
                 this.NameWithExt = file;
                 this.Ext = ext;
@@ -29,16 +29,19 @@ namespace duplicateFileFinder
 
         static public bool AddFile (string path, string file, string ext, string md5)
         {
-            var f = new File(path, file, ext, md5);
-            files.Add(f);
+            var f = new _file(path, file, ext, md5);
+            _files.Add(f);
             if (md5 != null)
             {
-                if (hashs.IndexOf( md5) == -1)
-                {
-                    hashs.Add(md5);
-                }
+                SignatureList.Add(md5);
             }
             return true;
+        }
+
+        static public void Clear ()
+        {
+            _files.Clear();
+            SignatureList.Clear();
         }
     }
 }
