@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace duplicateFileFinder
     class FileList
     {
         static private  List<_file> _files = new List<_file>();
+        static private List<string> _filesList = new List<string>();
         
         
         private  class _file
@@ -42,6 +44,39 @@ namespace duplicateFileFinder
         {
             _files.Clear();
             SignatureList.Clear();
+        }
+
+        static private void PrepareFileList (string parentdir, string whild, bool recursive)
+        {
+            var dr = new DirectoryInfo (parentdir);
+
+            if (recursive)
+            {
+                foreach (DirectoryInfo dir in dr.GetDirectories())
+                {
+                    try
+                    {
+                        PrepareFileList(dir.FullName, whild, recursive);
+                    }
+                    catch { }
+                }
+            }
+
+            foreach (FileInfo file in dr.GetFiles())
+            {
+                try
+                {
+                    if (!file.Extension.ToString().Equals(whild))
+                        _filesList.Add(file.FullName.ToString());
+                }
+                catch { }
+            }
+        }
+
+        public static string[] GetFileList (string parentdir, string whild, bool recursive)
+        {
+            PrepareFileList(parentdir, whild, recursive);
+            return _filesList.ToArray();
         }
     }
 }
