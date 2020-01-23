@@ -45,8 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SignatureList.cs" />
     <Compile Include="FileList.cs" />
+    <Compile Include="SignatureList.cs" />
+    <Compile Include="FileDB.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

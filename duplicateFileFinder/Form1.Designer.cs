@@ -32,15 +32,15 @@
             this.buFindFiles = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.gdiMD5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FilesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.gdFolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gdFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gdMd5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gdRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.gdiMD5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FilesCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -106,6 +106,18 @@
             this.splitContainer2.SplitterDistance = 89;
             this.splitContainer2.TabIndex = 2;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(12, 66);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(174, 21);
+            this.checkBox1.TabIndex = 1;
+            this.checkBox1.Text = "Include sub Directories";
+            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -118,6 +130,18 @@
             this.dataGridView2.RowTemplate.Height = 24;
             this.dataGridView2.Size = new System.Drawing.Size(208, 424);
             this.dataGridView2.TabIndex = 1;
+            this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
+            // 
+            // gdiMD5
+            // 
+            this.gdiMD5.HeaderText = "Signature";
+            this.gdiMD5.Name = "gdiMD5";
+            // 
+            // FilesCount
+            // 
+            this.FilesCount.HeaderText = "Files";
+            this.FilesCount.Name = "FilesCount";
+            this.FilesCount.ReadOnly = true;
             // 
             // dataGridView1
             // 
@@ -157,29 +181,6 @@
             // 
             this.gdRemove.HeaderText = "Remove";
             this.gdRemove.Name = "gdRemove";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 66);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(174, 21);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Include sub Directories";
-            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // gdiMD5
-            // 
-            this.gdiMD5.HeaderText = "Signature";
-            this.gdiMD5.Name = "gdiMD5";
-            // 
-            // FilesCount
-            // 
-            this.FilesCount.HeaderText = "Files";
-            this.FilesCount.Name = "FilesCount";
-            this.FilesCount.ReadOnly = true;
             // 
             // Form1
             // 

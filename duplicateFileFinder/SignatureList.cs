@@ -56,6 +56,5 @@ namespace duplicateFileFinder
         {
             return _hashs.ToArray();
         }
-
     }
 }

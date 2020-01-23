@@ -9,46 +9,13 @@ namespace duplicateFileFinder
 {
     class FileList
     {
-        static private  List<_file> _files = new List<_file>();
-        static private List<string> _filesList = new List<string>();
-        
-        
-        private  class _file
-        {
-            string NameWithExt;
-            string Ext;
-            string Path;
-            string Md5;
+        private List<string> _filesList = new List<string>();
 
-            public _file(string path, string file, string ext, string md5)
-            {
-                this.NameWithExt = file;
-                this.Ext = ext;
-                this.Path = path;
-                this.Md5 = md5;
-            }
-        }
 
-        static public bool AddFile (string path, string file, string ext, string md5)
-        {
-            var f = new _file(path, file, ext, md5);
-            _files.Add(f);
-            if (md5 != null)
-            {
-                SignatureList.Add(md5);
-            }
-            return true;
-        }
 
-        static public void Clear ()
+        private void PrepareFileList(string parentdir, bool recursive)
         {
-            _files.Clear();
-            SignatureList.Clear();
-        }
-
-        static private void PrepareFileList (string parentdir, string whild, bool recursive)
-        {
-            var dr = new DirectoryInfo (parentdir);
+            var dr = new DirectoryInfo(parentdir);
 
             if (recursive)
             {
@@ -56,7 +23,7 @@ namespace duplicateFileFinder
                 {
                     try
                     {
-                        PrepareFileList(dir.FullName, whild, recursive);
+                        PrepareFileList(dir.FullName, recursive);
                     }
                     catch { }
                 }
@@ -66,16 +33,15 @@ namespace duplicateFileFinder
             {
                 try
                 {
-                    if (!file.Extension.ToString().Equals(whild))
-                        _filesList.Add(file.FullName.ToString());
+                   _filesList.Add(file.FullName.ToString());
                 }
                 catch { }
             }
         }
 
-        public static string[] GetFileList (string parentdir, string whild, bool recursive)
+        public string[] GetFileList(string parentdir, bool recursive)
         {
-            PrepareFileList(parentdir, whild, recursive);
+            PrepareFileList(parentdir, recursive);
             return _filesList.ToArray();
         }
     }

@@ -27,15 +27,17 @@ namespace duplicateFileFinder
         private void buFindFiles_Click(object sender, EventArgs e)
         {
             var index = 0;
+            var fdb = new FileDB();
+            var fl = new FileList();
+
             folderBrowserDialog1.ShowDialog();
             var path = folderBrowserDialog1.SelectedPath;
             if (path.Count() > 0)
             {
-                var files = FileList.GetFileList(path, "", checkBox1.Checked);
+                var files = fl.GetFileList(path, checkBox1.Checked);
                 var md5 = MD5.Create();
-                FileList.Clear();
-                dataGridView1.Rows.Clear();
-                dataGridView2.Rows.Clear();
+
+                ClearAll();
 
                 foreach (var f in files)
                 {
@@ -43,23 +45,16 @@ namespace duplicateFileFinder
                     {
                         var data = File.ReadAllBytes(f);
                         var m = BitConverter.ToString(md5.ComputeHash(data)).Replace("-", string.Empty);
-                        FileList.AddFile(Path.GetDirectoryName(f), Path.GetFileName(f), Path.GetExtension(f), m);
+                        fdb.AddFile(Path.GetDirectoryName(f), Path.GetFileName(f), Path.GetExtension(f), m);
                         this.dataGridView1.Rows.Add();
                         dataGridView1.Rows[index].Cells["gdFolder"].Value = Path.GetDirectoryName(f);
                         dataGridView1.Rows[index].Cells["gdFileName"].Value = Path.GetFileName(f);
                         dataGridView1.Rows[index].Cells["gdMD5"].Value = m;
+                        
                         ++index;
                     }
                     catch { }
                 }
-                /*
-                index = 0;
-                foreach (var h in FileList.hashs)
-                {
-                    this.dataGridView2.Rows.Add();
-                    dataGridView2.Rows[index++].Cells[0].Value = h;
-                }
-                */
             }
             var sig = SignatureList.GetSignatures();
             index = 0;
@@ -82,6 +77,34 @@ namespace duplicateFileFinder
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var signature = dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString();
+            if (signature.Count() > 0)
+            {
+                dataGridView1.Rows.Clear();
+                var fl = FileDB.FileListWithSignature(signature);
+                var i = 0;
+                foreach (var f in fl)
+                {
+                    this.dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells["gdFolder"].Value = f.Path; ;
+                    dataGridView1.Rows[i].Cells["gdFileName"].Value = f.NameWithExt;
+                    dataGridView1.Rows[i].Cells["gdMD5"].Value = f.Md5;
+                    i++;
+                }
+
+            }
+        }
+
+        private void ClearAll ()
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView2.Rows.Clear();
+            SignatureList.Clear();
+            FileDB.Clear();
         }
     }
 }
